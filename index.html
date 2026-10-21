@@ -108,7 +108,13 @@ const CFG = {
   release_url: "https://github.com/rezaafra62/netbond/releases/tag/v1.6.5",
   sha256     : "daaa73c9d246cfa368658c873e84d70f8e274dde8e355a761ba8905b5e77d919",
   order_url  : "https://rezaafra62.github.io/netbond/",   // آدرس رسمی سایت (پس از انتشار)
-  version    : "1.6.5"
+  version    : "1.6.5",
+
+  // ---- مرحلهٔ ۴: لینک‌های پرداخت میزبانی‌شدهٔ OxaPay ----
+  // وقتی در داشبورد OxaPay → Payment Links دو لینک ساختید، آدرسشان را
+  // این‌جا بگذارید. تا خالی‌اند، صفحه همان روش «واریز مستقیم به آدرس» را نشان می‌دهد.
+  oxa_link_one    : "",     // لینک پرداختِ لایسنس تک‌ماشینی (۱۹ USDT)
+  oxa_link_bundle : ""      // لینک پرداختِ باندل ۵ ماشینی (۹۹ USDT)
 };
 </script>
 
@@ -302,7 +308,35 @@ function openBuy(method, plan){
   if (method === "usdt"){
     title.textContent = en ? T["usdt_"+plan+"_en"] : T["usdt_"+plan+"_fa"];
     const addrReady = !/YOUR_TRC20/.test(CFG.usdt_trc20);
-    body.innerHTML = (en ? `
+    const oxaLink = plan === "one" ? CFG.oxa_link_one : CFG.oxa_link_bundle;
+    const oxaReady = !!(oxaLink && !/^(https?:\/\/)?\s*$/.test(oxaLink) && oxaLink.length > 8);
+    const oxaBlock = oxaReady ? (en ? `
+      <div class="note" style="background:#eafaf5;border-color:#5eead4;color:#0f5f52">
+        <b>Fastest way:</b> pay on OxaPay's secure hosted checkout — it shows the exact
+        amount and the TRC20 address, tracks confirmations, and tells you when it's done.
+      </div>
+      <div style="text-align:center;margin:12px 0">
+        <a class="btn gold" style="text-decoration:none;display:inline-block"
+           href="${esc(oxaLink)}" target="_blank" rel="noopener">Pay ${price} USDT on OxaPay →</a>
+      </div>
+      <div style="text-align:center;color:#6b7280;font-size:13px;margin-bottom:10px">
+        After paying, send your <b>NBF-…</b> machine code with the button below.</div>
+      <hr style="border:none;border-top:1px solid #e5e7eb;margin:14px 0">
+      <div style="color:#6b7280;font-size:13px;margin-bottom:6px">Or pay directly to the wallet:</div>`
+    : `
+      <div class="note" style="background:#eafaf5;border-color:#5eead4;color:#0f5f52">
+        <b>سریع‌ترین راه:</b> پرداخت در صفحهٔ امنِ میزبانی‌شدهٔ OxaPay — مبلغ دقیق و آدرس
+        TRC20 را خودش نشان می‌دهد، تأییدها را پیگیری می‌کند و وقتی تمام شد خبر می‌دهد.
+      </div>
+      <div style="text-align:center;margin:12px 0">
+        <a class="btn gold" style="text-decoration:none;display:inline-block"
+           href="${esc(oxaLink)}" target="_blank" rel="noopener">پرداخت ${price} تتر در OxaPay ←</a>
+      </div>
+      <div style="text-align:center;color:#6b7280;font-size:13px;margin-bottom:10px">
+        بعد از پرداخت، کد ماشین <b>NBF-…</b> را با دکمهٔ زیر بفرستید.</div>
+      <hr style="border:none;border-top:1px solid #e5e7eb;margin:14px 0">
+      <div style="color:#6b7280;font-size:13px;margin-bottom:6px">یا واریز مستقیم به کیف پول:</div>`) : "";
+    body.innerHTML = oxaBlock + (en ? `
       <ol>
         <li>Send exactly <b>${price} USDT</b> (TRC20 network) to the address below.</li>
         <li>Copy the transaction hash (txid).</li>
