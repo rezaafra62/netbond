@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NetBond — تجمیع چند اتصال اینترنت | Multi-uplink internet bonding</title>
+<meta name="description" content="NetBond bonds Wi-Fi + Ethernet + hotspot on one Windows PC into one fast pipe. No VPS, no cloud. Perpetual hardware-locked licence.">
+<style>
+  :root{--ink:#0f172a;--mut:#64748b;--line:#e2e8f0;--bg:#f8fafc;--card:#fff;
+        --acc:#0f766e;--acc2:#134e4a;--gold:#b45309;--ok:#166534;--rad:16px;}
+  *{box-sizing:border-box;margin:0}
+  body{font-family:Tahoma,"Segoe UI",Arial,sans-serif;background:var(--bg);
+       color:var(--ink);line-height:1.85}
+  .en{display:none}
+  body.lang-en .en{display:inline}
+  body.lang-en .fa{display:none}
+  body.lang-en{direction:ltr}
+  html{scroll-behavior:smooth}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 18px}
+  header{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;
+         padding:18px 0;position:sticky;top:0;z-index:50;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+  header .wrap{display:flex;align-items:center;gap:14px;justify-content:space-between}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:bold;font-size:19px}
+  nav a{color:#e6fffa;text-decoration:none;margin:0 8px;font-size:14px}
+  nav a:hover{text-decoration:underline}
+  .langbtn{background:#ffffff22;border:1px solid #ffffff55;color:#fff;
+           border-radius:8px;padding:4px 12px;cursor:pointer;font-family:inherit}
+  .hero{padding:64px 0 44px;text-align:center;
+        background:radial-gradient(1200px 400px at 50% -50px,#ccfbf1,transparent)}
+  .hero h1{font-size:clamp(26px,5vw,44px);margin-bottom:10px}
+  .hero p.sub{font-size:clamp(15px,2.4vw,19px);color:var(--mut);max-width:640px;margin:0 auto 26px}
+  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-block;border-radius:12px;padding:12px 26px;font-size:16px;
+       text-decoration:none;cursor:pointer;border:none;font-family:inherit;font-weight:bold}
+  .btn.acc{background:var(--acc);color:#fff}
+  .btn.gold{background:var(--gold);color:#fff}
+  .btn.ghost{background:#fff;color:var(--acc);border:2px solid var(--acc)}
+  .btn:hover{filter:brightness(1.08)}
+  section{padding:44px 0}
+  h2{font-size:clamp(20px,3.4vw,30px);text-align:center;margin-bottom:26px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);
+        padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+  .card h3{font-size:17px;margin-bottom:6px;color:var(--acc2)}
+  .card p{color:var(--mut);font-size:14px}
+  .steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);
+        padding:18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;top:-14px;
+        inset-inline-start:16px;width:30px;height:30px;border-radius:50%;
+        background:var(--acc);color:#fff;display:flex;align-items:center;
+        justify-content:center;font-weight:bold}
+  .price-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+  .price{background:var(--card);border:2px solid var(--line);border-radius:var(--rad);
+         padding:26px;text-align:center;position:relative}
+  .price.hot{border-color:var(--acc);box-shadow:0 8px 30px rgba(15,118,110,.15)}
+  .tag{position:absolute;top:-14px;inset-inline-start:50%;transform:translateX(50%);
+       background:var(--gold);color:#fff;border-radius:999px;padding:2px 16px;font-size:13px;font-weight:bold}
+  body.lang-en .tag{transform:translateX(-50%)}
+  .old{color:var(--mut);text-decoration:line-through;font-size:16px}
+  .now{font-size:40px;font-weight:bold;color:var(--acc2);margin:4px 0}
+  .per{color:var(--mut);font-size:13px;margin-bottom:14px}
+  .price ul{list-style:none;text-align:start;margin:0 0 18px;color:var(--mut);font-size:14px}
+  .price li{margin:4px 0;padding-inline-start:22px;position:relative}
+  .price li::before{content:"✔";color:var(--ok);position:absolute;inset-inline-start:0}
+  .buybtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .trust{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;color:var(--mut);
+         font-size:13.5px;margin-top:26px}
+  .faq details{background:var(--card);border:1px solid var(--line);border-radius:12px;
+        padding:14px 18px;margin:10px 0}
+  .faq summary{cursor:pointer;font-weight:bold}
+  .faq p{color:var(--mut);font-size:14px;margin-top:8px}
+  footer{background:var(--acc2);color:#cbd5e1;padding:30px 0;font-size:13px;text-align:center}
+  footer a{color:#99f6e4}
+  .modal{position:fixed;inset:0;background:#0f172acc;display:none;align-items:center;
+         justify-content:center;z-index:100;padding:16px}
+  .modal.open{display:flex}
+  .sheet{background:#fff;border-radius:var(--rad);max-width:560px;width:100%;
+         padding:24px;position:relative;max-height:88vh;overflow:auto}
+  .sheet h3{margin-bottom:10px;color:var(--acc2)}
+  .sheet ol{padding-inline-start:20px;color:#334155;font-size:14.5px}
+  .sheet li{margin:8px 0}
+  .addr{direction:ltr;text-align:center;background:#f1f5f9;border:1px dashed #94a3b8;
+        border-radius:10px;padding:10px;font-family:Consolas,monospace;word-break:break-all;
+        font-size:14px;margin:8px 0}
+  .copy{background:var(--acc);color:#fff;border:none;border-radius:8px;padding:6px 14px;
+        cursor:pointer;font-family:inherit}
+  .x{position:absolute;top:10px;inset-inline-end:14px;border:none;background:none;
+     font-size:22px;cursor:pointer;color:var(--mut)}
+  .note{background:#fffbeb;border:1px solid #fcd34d;border-radius:10px;padding:10px 14px;
+        font-size:13.5px;color:#92400e;margin:10px 0}
+  code{background:#eef2f7;border-radius:6px;padding:1px 6px;direction:ltr;display:inline-block}
+</style>
+</head>
+<body class="lang-fa">
+
+<!-- ================== CONFIG: فروشنده فقط این چند خط را ویرایش می‌کند ================== -->
+<script>
+const CFG = {
+  usdt_trc20 : "TNrRhuuBXKSt6xkKmgq737RK5wFSGzor4b",   // آدرس ترون (TRC20) فروشنده — چک‌سام راستی‌آزمایی شد
+  email      : "afrasourena@gmail.com",           // ایمیل تماس فروشنده
+  price_one  : 19,                          // USDT قیمت launch
+  price_one_old : 29,
+  price_bundle : 99,                        // USDT پنج ماشین
+  price_bundle_old : 145,
+  trial_url  : "https://github.com/rezaafra62/netbond/releases/download/v1.6.5/netbond-1.6.5-trial48.zip",
+  repo_url   : "https://github.com/rezaafra62/netbond",
+  release_url: "https://github.com/rezaafra62/netbond/releases/tag/v1.6.5",
+  sha256     : "daaa73c9d246cfa368658c873e84d70f8e274dde8e355a761ba8905b5e77d919",
+  order_url  : "https://rezaafra62.github.io/netbond/",   // آدرس رسمی سایت (پس از انتشار)
+  version    : "1.6.5"
+};
+</script>
+
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="9" cy="9" r="5" fill="#5eead4"/><circle cx="23" cy="9" r="5" fill="#99f6e4"/>
+        <circle cx="16" cy="23" r="6" fill="#ffffff"/>
+        <path d="M11 12l4 8M21 12l-4 8M12 9h8" stroke="#0f766e" stroke-width="2.4" fill="none"/>
+      </svg>
+      NetBond
+    </div>
+    <nav>
+      <a href="#features"><span class="fa">امکانات</span><span class="en">Features</span></a>
+      <a href="#how"><span class="fa">روش کار</span><span class="en">How it works</span></a>
+      <a href="#buy"><span class="fa">خرید</span><span class="en">Pricing</span></a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <button class="langbtn" onclick="toggleLang()">EN / فا</button>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <h1><span class="fa">همهٔ اینترنت‌هایت را به یکی تبدیل کن</span><span class="en">Bond every internet connection into one</span></h1>
+    <p class="sub">
+      <span class="fa">وای‌فای + اترنت + هات‌اسپات موبایل روی یک ویندوز → یک لولهٔ سریع‌تر. بدون VPS، بدون ابر، بدون هزینهٔ ماهانه. کلید دائمی قفل‌شده به سخت‌افزار، فعال‌سازی ۱۰۰٪ آفلاین.</span>
+      <span class="en">Wi‑Fi + Ethernet + phone hotspot on one Windows PC → one faster pipe. No VPS, no cloud, no monthly fee. Perpetual hardware-locked licence, 100% offline activation.</span>
+    </p>
+    <div class="cta">
+      <a class="btn acc" id="trialBtn" href="#">
+        <span class="fa">دانلود آزمایشی ۴۸ ساعته (رایگان)</span><span class="en">Download 48-h trial (free)</span></a>
+      <a class="btn gold" href="#buy">
+        <span class="fa">خرید نسخهٔ کامل</span><span class="en">Buy the full version</span></a>
+      <a class="btn ghost" id="repoBtn" href="#">GitHub</a>
+    </div>
+    <div class="trust">
+      <span>🔒 <span class="fa">بدون phone-home</span><span class="en">No phone-home</span></span>
+      <span>🧪 <span class="fa">۱۰۹۱ آزمون سبز</span><span class="en">1091 green tests</span></span>
+      <span> <span class="fa">راهنمای ۴ زبانه داخل برنامه</span><span class="en">In-app manuals in 4 languages</span></span>
+      <span>🪟 Windows 10/11 · Linux</span>
+      <span>✉️ <a id="mailLnk2" href="#" style="color:inherit">afrasourena@gmail.com</a></span>
+    </div>
+  </div>
+</div>
+
+<section id="features">
+  <div class="wrap">
+    <h2><span class="fa">چه چیزی می‌خرید؟</span><span class="en">What you get</span></h2>
+    <div class="grid">
+      <div class="card"><h3><span class="fa">تجمیع واقعی پهنای باند</span><span class="en">Real bandwidth aggregation</span></h3>
+        <p><span class="fa">ترافیک روی همهٔ لینک‌های فعال پخش می‌شود؛ خروجی ≈ جمعِ لینک‌ها، نه سریع‌ترین‌شان.</span><span class="en">Traffic spreads over every active link; throughput ≈ the sum of the links, not the fastest one.</span></p></div>
+      <div class="card"><h3><span class="fa">دو موتور: پراکسی و شفاف</span><span class="en">Two engines: proxy & transparent</span></h3>
+        <p><span class="fa">پراکسی HTTP/SOCKS5 برای برنامه‌های پراکسی‌پذیر (از جمله IDM) و حالت شفاف TAP/TUN برای کل سیستم.</span><span class="en">Local HTTP/SOCKS5 proxy for proxy-aware apps (incl. download managers) and system-wide TAP/TUN mode.</span></p></div>
+      <div class="card"><h3><span class="fa">مسیردهی برنامه‌ای</span><span class="en">Per-app routing</span></h3>
+        <p><span class="fa">لینک‌ها را تیک بزنید و خروجی تجمیعی را فقط به برنامه‌های انتخابی خودتان بدهید.</span><span class="en">Tick adapters and route the aggregate only into the programs you choose.</span></p></div>
+      <div class="card"><h3><span class="fa">تقسیم دانلود بزرگ</span><span class="en">Split big downloads</span></h3>
+        <p><span class="fa">دانلودهای حجیم byte-range روی چند لینک تقسیم می‌شوند؛ سرعت واقعیِ چند برابر.</span><span class="en">Large downloads split byte-range style across links for a real multi-link speed-up.</span></p></div>
+      <div class="card"><h3><span class="fa">fail-open؛ هرگز قطعی نیست</span><span class="en">Fail-open; never drops</span></h3>
+        <p><span class="fa">اگر لینکی بمیرد ترافیک روی بازمانده‌ها ادامه می‌یابد؛ نشست شما قطع نمی‌شود.</span><span class="en">If a link dies, traffic keeps flowing over the survivors; your session never drops.</span></p></div>
+      <div class="card"><h3><span class="fa">لایسنس دائمی، آفلاین</span><span class="en">Perpetual offline licence</span></h3>
+        <p><span class="fa">کلید به سخت‌افزار همان ماشین قفل است؛ هیچ اتصال بررسی‌کننده‌ای وجود ندارد؛ تعویض یک قطعه لایسنس را نمی‌سوزاند.</span><span class="en">The key is locked to that machine's hardware; nothing phones home; replacing one part won't orphan your licence.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<section id="how" style="background:#eefcf9">
+  <div class="wrap">
+    <h2><span class="fa">در سه قدم بالا می‌آید</span><span class="en">Up and running in three steps</span></h2>
+    <div class="steps">
+      <div class="step"><h3><span class="fa">دانلود و استخراج</span><span class="en">Download & extract</span></h3>
+        <p><span class="fa">zip آزمایشی از گیت‌هاب؛ Extract All روی هر پوشه‌ای.</span><span class="en">Trial zip from GitHub; Extract All anywhere.</span></p></div>
+      <div class="step"><h3><span class="fa">اجرا و تیک لینک‌ها</span><span class="en">Run & tick your links</span></h3>
+        <p><span class="fa">run_netbond.pyw (یا exe ساخته‌شده با build_exe.bat)؛ آداپتورها را تیک بزنید.</span><span class="en">run_netbond.pyw (or the exe from build_exe.bat); tick the adapters.</span></p></div>
+      <div class="step"><h3><span class="fa">لینک سیستم یا برنامه</span><span class="en">Bind system or apps</span></h3>
+        <p><span class="fa"><code>netbond win-proxy on</code> برای کل سیستم، یا پراکسی محلی برای برنامه‌ها.</span><span class="en"><code>netbond win-proxy on</code> for the whole system, or the local proxy per app.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<section id="buy">
+  <div class="wrap">
+    <h2><span class="fa">قیمت‌ها — یک‌بار بخرید، برای همیشه</span><span class="en">Pricing — pay once, keep forever</span></h2>
+    <div class="price-row">
+      <div class="price hot">
+        <div class="tag"><span class="fa">پیشنهاد launch</span><span class="en">Launch offer</span></div>
+        <h3><span class="fa">لایسنس تک‌ماشینی</span><span class="en">Single-machine licence</span></h3>
+        <div class="old" id="old1"></div>
+        <div class="now"><span id="now1"></span> USDT</div>
+        <div class="per"><span class="fa">پرداخت یک‌بار · کلید دائمی · یک ماشین</span><span class="en">One-time payment · perpetual key · one machine</span></div>
+        <ul>
+          <li><span class="fa">همهٔ قابلیت‌ها، بدون محدودیت</span><span class="en">All features, unlimited</span></li>
+          <li><span class="fa">فعال‌سازی آفلاین با کد سخت‌افزاری</span><span class="en">Offline activation via hardware code</span></li>
+          <li><span class="fa">به‌روزرسانی‌های ۱.x رایگان</span><span class="en">Free 1.x updates</span></li>
+          <li><span class="fa">پشتیبانی ایمیلی</span><span class="en">Email support</span></li>
+        </ul>
+        <div class="buybtns">
+          <button class="btn gold" onclick="openBuy('usdt','one')"><span class="fa">خرید با تتر (TRC20)</span><span class="en">Buy with USDT (TRC20)</span></button>
+          <button class="btn ghost" onclick="openBuy('rial','one')"><span class="fa">خرید ریالی</span><span class="en">Buy in Rial</span></button>
+        </div>
+      </div>
+      <div class="price">
+        <h3><span class="fa">باندل ۵ ماشینی</span><span class="en">5-machine bundle</span></h3>
+        <div class="old" id="old5"></div>
+        <div class="now"><span id="now5"></span> USDT</div>
+        <div class="per"><span class="fa">پنج کلید جدا برای پنج ماشین (خانواده/شرکت)</span><span class="en">Five separate keys for five machines (family/office)</span></div>
+        <ul>
+          <li><span class="fa">هر ماشین کد سخت‌افزاری و کلید خودش را دارد</span><span class="en">Each machine gets its own hardware code & key</span></li>
+          <li><span class="fa">≈ ۴۰٪ ارزان‌تر از پنج لایسنس تکی</span><span class="en">≈40% cheaper than five single licences</span></li>
+          <li><span class="fa">همهٔ مزایای لایسنس تکی</span><span class="en">Everything in the single licence</span></li>
+        </ul>
+        <div class="buybtns">
+          <button class="btn gold" onclick="openBuy('usdt','bundle')"><span class="fa">خرید با تتر (TRC20)</span><span class="en">Buy with USDT (TRC20)</span></button>
+          <button class="btn ghost" onclick="openBuy('rial','bundle')"><span class="fa">خرید ریالی</span><span class="en">Buy in Rial</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="trust">
+      <span>✅ SHA-256 <code id="sha"></code></span>
+      <span>🧾 <a id="relLnk" href="#"><span class="fa">یادداشت انتشار v1.6.5</span><span class="en">v1.6.5 release notes</span></a></span>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="faq">
+  <div class="wrap" style="max-width:760px">
+    <h2><span class="fa">پرسش‌های پرتکرار</span><span class="en">FAQ</span></h2>
+    <details><summary><span class="fa">کلید من روی چند ماشین کار می‌کند؟</span><span class="en">How many machines does my key work on?</span></summary>
+      <p><span class="fa">روی همان یک ماشینی که کد سخت‌افزاری‌اش را فرستادید. کلید لو رفته روی ماشین دیگر اجرا نمی‌شود. باندل ۵ ماشینی = پنج کلید جدا.</span><span class="en">Only the one machine whose hardware code you sent. A leaked key won't run elsewhere. The bundle = five separate keys.</span></p></details>
+    <details><summary><span class="fa">اگر قطعه‌ای از سخت‌افزار را عوض کنم چه؟</span><span class="en">What if I replace a hardware part?</span></summary>
+      <p><span class="fa">تعویض یک قطعه (مثلاً کارت شبکه) لایسنس را باطل نمی‌کند؛ تعویض کل ماشین یعنی کد جدید و کلید جدید.</span><span class="en">Replacing one part (e.g. the NIC) keeps your licence; replacing the whole machine means a new code and a new key.</span></p></details>
+    <details><summary><span class="fa">برای فعال‌سازی اینترنت لازم است؟</span><span class="en">Does activation need internet?</span></summary>
+      <p><span class="fa">هرگز. صدور و بررسی کلید ۱۰۰٪ آفلاین است؛ هیچ سرور واسطی در مسیر نیست.</span><span class="en">Never. Issuing and verifying keys is 100% offline; no middle server anywhere.</span></p></details>
+    <details><summary><span class="fa">تفاوتش با Speedify چیست؟</span><span class="en">How is it different from Speedify?</span></summary>
+      <p><span class="fa">Speedify اشتراک ماهانه دارد و ترافیک از ابرشان می‌گذرد؛ NetBond یک‌بار خرید است و ترافیک هرگز از سرور ثالث نمی‌گذرد.</span><span class="en">Speedify is a monthly subscription routing via their cloud; NetBond is one-time and no third server ever touches your traffic.</span></p></details>
+    <details><summary><span class="fa">نسخهٔ آزمایشی چه محدودیتی دارد؟</span><span class="en">What are the trial limits?</span></summary>
+      <p><span class="fa">هیچ محدودیت قابلیتی نیست؛ فقط ۴۸ ساعت. بعدش با کلید، همان برنامه کامل می‌ماند بدون حذف نصب.</span><span class="en">No feature limits; just 48 hours. Afterwards a key upgrades the same install, no reinstall.</span></p></details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>NetBond v1.6.5 — <span class="fa">نرم‌افزار تجاری با لایسنس دائمی per-machine؛ مواد مخزن عمومی تحت MIT.</span><span class="en">Commercial software with a perpetual per-machine licence; public repo materials under MIT.</span></p>
+    <p><a id="mailLnk" href="#"><span class="fa">تماس با فروشنده</span><span class="en">Contact the seller</span></a> ·
+       <a id="repoBtn2" href="#">GitHub</a> · <span id="siteLnk"></span></p>
+  </div>
+</footer>
+
+<!-- ================== buy modal ================== -->
+<div class="modal" id="modal">
+  <div class="sheet">
+    <button class="x" onclick="closeBuy()">✕</button>
+    <h3 id="mTitle"></h3>
+    <div id="mBody"></div>
+  </div>
+</div>
+
+<script>
+function toggleLang(){
+  const en = document.body.classList.toggle("lang-en");
+  document.documentElement.lang = en ? "en" : "fa";
+  document.documentElement.dir  = en ? "ltr" : "rtl";
+}
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+document.getElementById("trialBtn").href = CFG.trial_url;
+document.getElementById("repoBtn").href  = CFG.repo_url;
+document.getElementById("repoBtn2").href = CFG.repo_url;
+document.getElementById("relLnk").href   = CFG.release_url;
+document.getElementById("mailLnk").href  = "mailto:" + CFG.email;
+document.getElementById("mailLnk2").href = "mailto:" + CFG.email;
+document.getElementById("sha").textContent = CFG.sha256.slice(0,12) + "…";
+if (location.href.indexOf(CFG.order_url) === 0) { document.getElementById("siteLnk").textContent = CFG.order_url; }
+document.getElementById("old1").textContent = CFG.price_one_old;
+document.getElementById("now1").textContent = CFG.price_one;
+document.getElementById("old5").textContent = CFG.price_bundle_old;
+document.getElementById("now5").textContent = CFG.price_bundle;
+
+const T = {
+  usdt_one_fa: "خرید لایسنس تک‌ماشینی با تتر (TRC20)",
+  usdt_one_en: "Single-machine licence with USDT (TRC20)",
+  usdt_bundle_fa: "خرید باندل ۵ ماشینی با تتر (TRC20)",
+  usdt_bundle_en: "5-machine bundle with USDT (TRC20)",
+};
+function openBuy(method, plan){
+  const en = document.body.classList.contains("lang-en");
+  const price = plan === "one" ? CFG.price_one : CFG.price_bundle;
+  const m = document.getElementById("modal");
+  const title = document.getElementById("mTitle");
+  const body  = document.getElementById("mBody");
+  if (method === "usdt"){
+    title.textContent = en ? T["usdt_"+plan+"_en"] : T["usdt_"+plan+"_fa"];
+    const addrReady = !/YOUR_TRC20/.test(CFG.usdt_trc20);
+    body.innerHTML = (en ? `
+      <ol>
+        <li>Send exactly <b>${price} USDT</b> (TRC20 network) to the address below.</li>
+        <li>Copy the transaction hash (txid).</li>
+        <li>In NetBond press the <b>Licence</b> button, copy your <b>NBF-…</b> machine code.</li>
+        <li>Email us the txid + machine code; your <b>NB1-…</b> key arrives signed for that exact machine.</li>
+      </ol>
+      ${addrReady ? `<div class="addr" id="addrBox">${esc(CFG.usdt_trc20)}</div>
+      <div style="text-align:center"><button class="copy" onclick="copyAddr()">Copy address</button></div>`
+      : `<div class="note"><b>Manual ordering is open.</b> Automated crypto checkout goes live in the next stage; until then click below and send your machine code — you get the wallet address and the exact amount by reply email, then your <b>NB1-…</b> key.</div>`}
+      <div style="text-align:center;margin-top:10px"><a class="copy" style="text-decoration:none;display:inline-block"
+        href="mailto:${esc(CFG.email)}?subject=${encodeURIComponent('NetBond order — '+(plan==='one'?'single licence':'5-machine bundle')+' ('+price+' USDT)')}&body=${encodeURIComponent((plan==='one'?'Plan: single-machine licence':'Plan: 5-machine bundle')+'\nPrice: '+price+' USDT (TRC20)\n\nMy machine code (NBF-...): \nTransaction hash / txid: \n\nPlease send payment details and my NB1-... key to this email.')}">Email my order</a></div>`
+    : `
+      <ol>
+        <li>دقیقاً <b>${price} تتر</b> روی شبکهٔ <b>TRC20</b> به آدرس زیر بفرستید.</li>
+        <li>هش تراکنش (txid) را کپی کنید.</li>
+        <li>در NetBond دکمهٔ <b>لایسنس</b> را بزنید و کد ماشین <b>NBF-…</b> خود را کپی کنید.</li>
+        <li>txid + کد ماشین را ایمیل کنید؛ کلید <b>NB1-…</b> همان ماشین برایتان صادر و ارسال می‌شود.</li>
+      </ol>
+      ${addrReady ? `<div class="addr" id="addrBox">${esc(CFG.usdt_trc20)}</div>
+      <div style="text-align:center"><button class="copy" onclick="copyAddr()">کپی آدرس</button></div>`
+      : `<div class="note"><b>سفارش دستی باز است.</b> پرداخت خودکار کریپتو در مرحلهٔ بعد فعال می‌شود؛ تا آن زمان دکمهٔ زیر را بزنید و کد ماشین‌تان را بفرستید — آدرس کیف پول و مبلغ دقیق با ایمیل برایتان می‌آید و سپس کلید <b>NB1-…</b> صادر می‌شود.</div>`}
+      <div style="text-align:center;margin-top:10px"><a class="copy" style="text-decoration:none;display:inline-block"
+        href="mailto:${esc(CFG.email)}?subject=${encodeURIComponent('NetBond order — '+(plan==='one'?'single licence':'5-machine bundle')+' ('+price+' USDT)')}&body=${encodeURIComponent((plan==='one'?'Plan: single-machine licence':'Plan: 5-machine bundle')+'\nPrice: '+price+' USDT (TRC20)\n\nMy machine code (NBF-...): \nTransaction hash / txid: \n\nPlease send payment details and my NB1-... key to this email.')}">ایمال سفارش من</a></div>`)
+      ;
+  } else {
+    title.textContent = en ? "Purchase in Iranian Rial" : "خرید ریالی";
+    body.innerHTML = en ? `
+      <p>Price: <b>${price} USDT</b> equivalent in Rial at the day's rate.</p>
+      <ol>
+        <li>Payment goes through an Iranian gateway (ZarinPal / IDPay) — being set up.</li>
+        <li>Until the gateway is live, email your order (plan + machine code) and you will receive a Rial payment link.</li>
+      </ol>
+      <div style="text-align:center"><a class="copy" style="text-decoration:none;display:inline-block"
+        href="mailto:${esc(CFG.email)}?subject=${encodeURIComponent('NetBond Rial order — '+(plan==='one'?'single licence':'5-machine bundle'))}&body=${encodeURIComponent((plan==='one'?'Plan: single-machine licence':'Plan: 5-machine bundle')+'\nPrice: '+price+' USDT equivalent in IRR at the day rate\n\nMy machine code (NBF-...): \n\nPlease send my Rial payment link.')}">Email my Rial order</a></div>
+      <div class="note">The Rial gateway button becomes one-click in the next stage.</div>`
+    : `
+      <p>مبلغ: معادل <b>${price} تتر</b> به ریال، با نرخ روز.</p>
+      <ol>
+        <li>پرداخت از درگاه ایرانی (زرین‌پال / IDPay) انجام می‌شود — در حال راه‌اندازی.</li>
+        <li>تا فعال‌شدن درگاه، سفارش‌تان (پلن + کد ماشین) را ایمیل کنید تا لینک پرداخت ریالی برایتان ارسال شود.</li>
+      </ol>
+      <div style="text-align:center"><a class="copy" style="text-decoration:none;display:inline-block"
+        href="mailto:${esc(CFG.email)}?subject=${encodeURIComponent('NetBond Rial order — '+(plan==='one'?'single licence':'5-machine bundle'))}&body=${encodeURIComponent((plan==='one'?'Plan: single-machine licence':'Plan: 5-machine bundle')+'\nPrice: '+price+' USDT equivalent in IRR at the day rate\n\nMy machine code (NBF-...): \n\nPlease send my Rial payment link.')}">ایمال سفارش ریالی</a></div>
+      <div class="note">دکمهٔ یک‌کلیکی درگاه ریالی در مرحلهٔ بعد فعال می‌شود.</div>`;
+  }
+  m.classList.add("open");
+}
+function copyAddr(){
+  const t = document.getElementById("addrBox").textContent;
+  navigator.clipboard && navigator.clipboard.writeText(t);
+}
+function closeBuy(){document.getElementById("modal").classList.remove("open")}
+document.getElementById("modal").addEventListener("click",e=>{
+  if(e.target.id==="modal") closeBuy();
+});
+</script>
+</body>
+</html>
